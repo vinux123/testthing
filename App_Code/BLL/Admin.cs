@@ -57,7 +57,7 @@ public class Admin
 
     }
     
-    public void SaveStudentDetails(Int32 Reg_No, String Student_ID, String Student_UID, String Student_Fname, String Student_Mname, String Student_lname, String Student_mothers_name, String student_Religion, String Student_Caste,
+    public void SaveStudentDetails(String Reg_No, String Student_ID, String Student_UID, String Student_Fname, String Student_Mname, String Student_lname, String Student_mothers_name, String student_Religion, String Student_Caste,
         String Student_Subcaste, String Student_Nationality, String Student_MotherTongue, String Student_POB_Village, String Student_POB_taluka, String Student_POB_dist, String Student_POB_state, String Student_POB_country, String Student_DOB,
         String Student_last_school, String Student_last_Standard, String Student_admission_date, String Student_admission_Standard, String Student_progress, String Student_conduct, String Student_DOL, String Student_standard_studying, String Student_reasonofleaving, String Student_remarks, String Student_status)
     {
@@ -132,7 +132,24 @@ public class Admin
         return dt;
     }
 
-    public DataTable GetStudentsList(Int32 RegNo)
+    public DataTable ExportToExcel()
+    {
+        DataTable dt = new DataTable();
+        MySqlConnection Connection;
+        String UserName = string.Empty;
+        string connectionstring = objDBHelper.GetSQLConnectionString();
+        Connection = new MySqlConnection(connectionstring);
+        Connection.Open();
+
+        string query = "Select * from vpems_gen_reg";
+        MySqlCommand cmd = new MySqlCommand(query, Connection);
+        MySqlDataReader dr = cmd.ExecuteReader();
+        dt.Load(dr);
+        Connection.Close();
+        return dt;          
+    }
+
+    public DataTable GetStudentsList(String RegNo)
     {
         DataTable dt = new DataTable();
         MySqlConnection Connection;
@@ -141,7 +158,7 @@ public class Admin
         Connection = new MySqlConnection(connectionstring);
         Connection.Open();
         
-        string query = "Select * from vpems_gen_reg where stud_regno = " + RegNo +" and stud_status = 'Active'";
+        string query = "Select * from vpems_gen_reg where stud_regno = '" + RegNo +"' and stud_status = 'Active'";
         MySqlCommand cmd = new MySqlCommand(query, Connection);
         MySqlDataReader dr = cmd.ExecuteReader();
         dt.Load(dr);
@@ -149,7 +166,7 @@ public class Admin
         return dt;
     }
 
-    public DataTable GetStudentsList(String StudentName)
+    public DataTable GetStudentsList1(String StudentName)
     {
         DataTable dt = new DataTable();
         MySqlConnection Connection;
@@ -166,7 +183,7 @@ public class Admin
         return dt;
     }
 
-    public void UpdateStudentStatus(Int32 RegNo)
+    public void UpdateStudentStatus(String RegNo)
     {
         MySqlConnection Connection;
         String UserName = string.Empty;
@@ -174,7 +191,7 @@ public class Admin
         Connection = new MySqlConnection(connectionstring);
         Connection.Open();
         
-        string query = "update vpems_gen_reg set stud_status = 'Alumni' where stud_regno = " + RegNo  ;
+        string query = "update vpems_gen_reg set stud_status = 'Alumni' where stud_regno = '" + RegNo + "'" ;
         MySqlCommand cmd = new MySqlCommand(query, Connection);
         MySqlDataReader dr = cmd.ExecuteReader();
         Connection.Close();

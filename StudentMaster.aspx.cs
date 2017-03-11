@@ -33,13 +33,14 @@ public partial class StudentMaster : System.Web.UI.Page
         {
             if (txtRegNo.Text.Length > 0)
             {
-                DataTable dt = objAdmin.GetStudentsList(Convert.ToInt32(txtRegNo.Text));
+                //DataTable dt = objAdmin.GetStudentsList(Convert.ToInt32(txtRegNo.Text));
+                DataTable dt = objAdmin.GetStudentsList(Convert.ToString(txtRegNo.Text));
                 grid1.DataSource = dt;
                 grid1.DataBind();
             }
             else if (txtName.Text.Length > 0)
             {
-                DataTable dt = objAdmin.GetStudentsList(Convert.ToString(txtName.Text));
+                DataTable dt = objAdmin.GetStudentsList1(Convert.ToString(txtName.Text));
                 grid1.DataSource = dt;
                 grid1.DataBind();
             }
@@ -57,7 +58,7 @@ public partial class StudentMaster : System.Web.UI.Page
         {
             // Retrieve the row index stored in the 
             // CommandArgument property.
-            int index = Convert.ToInt32(e.CommandArgument);
+            //int index = Convert.ToInt32(e.CommandArgument);
 
             Response.Redirect("StudentMasterEntry.aspx?RegID=" + e.CommandArgument);
         }
@@ -66,6 +67,8 @@ public partial class StudentMaster : System.Web.UI.Page
 
     protected void btnExport_Click(object sender, EventArgs e)
     {
-         
+        
+
+                 
     }
 }

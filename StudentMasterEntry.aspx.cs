@@ -16,15 +16,18 @@ public partial class StudentMasterEntry : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            Int32 ID = Convert.ToInt32(Request.QueryString["RegID"]);
-            if (ID != 0)
+            //Int32 ID = Convert.ToInt32(Request.QueryString["RegID"]);
+            String ID = Convert.ToString(Request.QueryString["RegID"]);
+            //if (ID.Length > 0)
+            if(!String.IsNullOrEmpty(ID))
             {
                 Admin objAdmin = new Admin();
                 DataTable dt=objAdmin.GetStudentsList(ID);
                 if (dt.Rows.Count > 0)
                 {
                     txtStatus.Text = dt.Rows[0]["stud_status"].ToString();  
-                    txtRegNo.Text = dt.Rows[0]["stud_regno"].ToString();
+                    txtRegNo.Text = dt.Rows[0]["stud_regno"].ToString().Substring(2, dt.Rows[0]["stud_regno"].ToString().Length - 2);
+                    txtGroup.SelectedValue = dt.Rows[0]["stud_regno"].ToString().Substring(0, 2);
                     txtIDNo.Text = dt.Rows[0]["stud_idno"].ToString();
                     txtUID.Text = dt.Rows[0]["stud_uid"].ToString();
                     
@@ -62,6 +65,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
                     // in order to get into update mode and enable textboxes, one needs to click on update button
 
                     txtRegNo.Enabled = false;
+                    txtGroup.Enabled = false;
                     txtUID.Enabled = false;
                     txtIDNo.Enabled = false;
                     txtStatus.Enabled = false;
@@ -105,7 +109,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         {
             Admin objAdmin = new Admin();
 
-            objAdmin.SaveStudentDetails(Convert.ToInt32(txtRegNo.Text), Convert.ToString(txtIDNo.Text), Convert.ToString(txtUID.Text), Convert.ToString(txtFName.Text),
+            objAdmin.SaveStudentDetails(Convert.ToString(txtGroup.Text) + Convert.ToString(txtRegNo.Text), Convert.ToString(txtIDNo.Text), Convert.ToString(txtUID.Text), Convert.ToString(txtFName.Text),
                                         Convert.ToString(txtMName.Text), Convert.ToString(txtSName.Text), Convert.ToString(txtMotherName.Text), Convert.ToString(txtReligion.Text),
                                         Convert.ToString(txtCaste.Text), Convert.ToString(txtSubcast.Text), Convert.ToString(txtNationality.Text), Convert.ToString(txtMothertongue.Text),
                                         Convert.ToString(txtVillage.Text), Convert.ToString(txtTaluka.Text), Convert.ToString(txtDist.Text), Convert.ToString(txtState.Text), Convert.ToString(txtCountry.Text),
@@ -136,7 +140,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
     
     protected void btnGenerateLC_Click(object sender, EventArgs e)
     {
-        Int32 ID = Convert.ToInt32(txtRegNo.Text);
+        String ID = Convert.ToString(txtGroup.SelectedValue) + Convert.ToString(txtRegNo.Text);
         string pdfregno;
         string pdfsid;
         string pdfsuid;
@@ -169,7 +173,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         string pdfadmstandard;
 
         Admin objAdmin = new Admin();
-        DataTable dt = objAdmin.GetStudentsList(ID);
+        DataTable dt = objAdmin.GetStudentsList(Convert.ToString(ID));
 
         pdfregno = dt.Rows[0]["stud_regno"].ToString();
         pdfsid = dt.Rows[0]["stud_idno"].ToString();
@@ -680,7 +684,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
             //document.Add(paragraph14);
 
             Admin objAdmin1 = new Admin();
-            objAdmin1.UpdateStudentStatus(Convert.ToInt32(txtRegNo.Text));
+            objAdmin1.UpdateStudentStatus(Convert.ToString(txtGroup.SelectedValue) + Convert.ToString(txtRegNo.Text));
             
             string message = string.Empty;
             message = "LC Generated Successfully";

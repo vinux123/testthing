@@ -44,6 +44,21 @@
                 </asp:DropDownList>
             </div>
         </div>
+
+        <div class="form-group row">
+             
+            <asp:Label Text="Group" ID="lblGroup" class="col-sm-2 col-form-label" runat="server"></asp:Label>
+            <div class="col-sm-10">
+                <asp:DropDownList ID="txtGroup" runat="server">
+                <asp:ListItem Text="Pre-Primary" Selected="True" Value="PP"></asp:ListItem>
+                <asp:ListItem Text="Primary" Selected="False" Value="PR"></asp:ListItem>
+                <asp:ListItem Text="Secondary" Selected="False" Value="SS"></asp:ListItem>
+                <asp:ListItem Text="High Secondary" Selected="False" Value="HS">
+                </asp:ListItem>
+                </asp:DropDownList>
+            </div>
+        </div>
+
         <div class="form-group row">
             <asp:Label Text="Register No" ID="lblRegistration" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
@@ -58,12 +73,14 @@
                 <asp:TextBox ID="txtIDNo" class="form-control" placeholder="Enter ID No" runat="server"></asp:TextBox>
             </div>
         </div>
+
         <div class="form-group row">
             <asp:Label Text="UID No" ID="lblUID" class="col-sm-2 col-form-label" runat="server"></asp:Label>
             <div class="col-sm-10">
                 <asp:TextBox ID="txtUID" class="form-control" placeholder="Enter UID No" runat="server"></asp:TextBox>
             </div>
         </div>
+
         <div class="form-group row">
             <asp:Label Text="Name of Pupil" ID="lblStudentName" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
@@ -77,6 +94,7 @@
                 <asp:TextBox ID="txtSName" class="form-control" placeholder="Surname" runat="server"></asp:TextBox>
             </div>
         </div>
+
         <div class="form-group row">
             <asp:Label Text="Mother's Name" ID="lblMotherName" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
@@ -85,6 +103,7 @@
                     runat="server"></asp:TextBox>
             </div>
         </div>
+
         <div class="form-group row">
             <asp:Label Text="Religion/Caste/SubCaste" ID="lblCast" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
