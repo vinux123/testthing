@@ -5,21 +5,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Student Master Entry</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <%--<script type="text/javascript">
+        jQuery(document).ready(function () {
             $("#btnSubmit").click(function (e) {
+                debugger;
                 var a = $("#txtRegNo").val()
                 alert(a);
             });
         });
 
-    </script>
+    </script>--%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnSubmit').click(function () {
+
+                var inVal = $("#txtRegNo").val();
+
+                if (inVal.length == 0) {
+                    alert("textbox value can't be empty");
+                    $("#txtRegNo").focus();
+                }
+            });
+        });
+     </script>
+
 </head>
 <link href="Assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="Assets/js/bootstrap.js" type="text/javascript"></script>
 <script src="Assets/js/bootstrap.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="Assets/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="Assets/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link href="Assets/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

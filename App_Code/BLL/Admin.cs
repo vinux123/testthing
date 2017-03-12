@@ -211,4 +211,33 @@ public class Admin
         Connection.Close();
         return uid;
     }
+
+    public String GetStudStatus(String Regno)
+    {
+        MySqlConnection Connection;
+        String status;
+        string connectionstring = objDBHelper.GetSQLConnectionString();
+        Connection = new MySqlConnection(connectionstring);
+        Connection.Open();
+
+        string query = "select stud_status FROM vpems_gen_reg WHERE stud_regno='" + Regno + "'";
+        MySqlCommand cmd = new MySqlCommand(query, Connection);
+        status = Convert.ToString(cmd.ExecuteScalar());
+        Connection.Close();
+        return status;
+    }
+
+    public void SetStudStatus(String RegNo, String NewStatus)
+    {
+        MySqlConnection Connection;
+        String UserName = string.Empty;
+        string connectionstring = objDBHelper.GetSQLConnectionString();
+        Connection = new MySqlConnection(connectionstring);
+        Connection.Open();
+
+        string query = "update vpems_gen_reg set stud_status = '" + NewStatus + "' where stud_regno = '" + RegNo + "'";
+        MySqlCommand cmd = new MySqlCommand(query, Connection);
+        MySqlDataReader dr = cmd.ExecuteReader();
+        Connection.Close();
+    }
 }
