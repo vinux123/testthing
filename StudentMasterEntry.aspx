@@ -48,12 +48,8 @@
             General Register No. 1 - Student Data</h1>
         <br />
         <div class="form-group row">
-        <%--<div class="dropdown">--%>
-        
             <asp:Label Text="Status" ID="lblStatus" class="col-sm-2 col-form-label" runat="server"></asp:Label>
             <div class="col-sm-10">
-            <%--<div class="dropdown">--%>
-                <%--<asp:TextBox ID="txtStatus" class="form-control" placeholder="Status" runat="server"></asp:TextBox>--%>
                 <asp:DropDownList ID="txtStatus" runat="server">
                 <asp:ListItem Text="Active" Selected="True" Value="Active">
                 </asp:ListItem>
@@ -137,7 +133,6 @@
             <asp:Label Text="Nationality & Mothertongue" ID="lblNationality" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
             <div class="col-sm-2">
-                <%--<asp:TextBox ID="txtNationality" class="form-control" placeholder="Nationality" runat="server"></asp:TextBox>--%>
                 <asp:DropDownList ID="txtNationality" runat="server">
                 <asp:ListItem Text="Indian" Value="Indian" Selected="True"></asp:ListItem>
                 </asp:DropDownList>
@@ -183,8 +178,6 @@
             <div class="col-sm-10">
                 <asp:TextBox ID="txtPrevSchoolName" class="form-control" placeholder="Previous School"
                     runat="server"></asp:TextBox>
-                <%--<asp:TextBox ID="txtPrevStandard" class="form-control" placeholder="Previous Standard"
-                    runat="server"></asp:TextBox>--%>
                 <asp:DropDownList ID="txtPrevStandard" class="form-control" runat="server">
                 <asp:ListItem Text="Nursary" Value="Nursary"></asp:ListItem>
                 <asp:ListItem Text="LKG" Value="LKG"></asp:ListItem>
@@ -220,7 +213,6 @@
         <div class="form-group row">
             <asp:Label Text="Class" ID="lblClass" class="col-sm-2 col-form-label" runat="server"></asp:Label>
             <div class="dropdown-menu-right">
-                <%--<asp:TextBox ID="txtClass" class="form-control" placeholder="Enter Class" runat="server"></asp:TextBox>--%>
                 <asp:DropDownList ID="txtClass" class="form-control" runat="server">
                 <asp:ListItem Text="Nursary" Value="Nursary"></asp:ListItem>
                 <asp:ListItem Text="LKG" Value="LKG"></asp:ListItem>
@@ -276,8 +268,6 @@
             <asp:Label Text="Standard in which studying and since" ID="lblStandard" class="col-sm-2 col-form-label"
                 runat="server"></asp:Label>
             <div class="col-sm-10">
-                <%--<asp:TextBox ID="txtStandard" class="form-control" placeholder="Standard in which studying and since"
-                    runat="server"></asp:TextBox>--%>
                 <asp:DropDownList ID="txtStandard" class="form-control" runat="server">
                 <asp:ListItem Text="Nursary" Value="Nursary"></asp:ListItem>
                 <asp:ListItem Text="LKG" Value="LKG"></asp:ListItem>

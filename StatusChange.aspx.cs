@@ -11,6 +11,7 @@ public partial class StatusChange : System.Web.UI.Page
     {
         txtcstatus.Enabled = false;
         txtnstatus.Enabled = false;
+        btnSubmit.Enabled = false;
     }
 
     protected void btnSearch_Click(object sender, EventArgs e)
@@ -21,6 +22,7 @@ public partial class StatusChange : System.Web.UI.Page
             txtcstatus.Text = Convert.ToString(objAdmin.GetStudStatus(txtRegNo.Text));
             txtcstatus.Enabled = false;
             txtnstatus.Enabled = true;
+            btnSubmit.Enabled = true;
         }
         catch (Exception ex)
         {

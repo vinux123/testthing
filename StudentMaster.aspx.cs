@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
+using System.IO;
+
 
 public partial class StudentMaster : System.Web.UI.Page
 {
@@ -33,7 +35,6 @@ public partial class StudentMaster : System.Web.UI.Page
         {
             if (txtRegNo.Text.Length > 0)
             {
-                //DataTable dt = objAdmin.GetStudentsList(Convert.ToInt32(txtRegNo.Text));
                 DataTable dt = objAdmin.GetStudentsList(Convert.ToString(txtRegNo.Text));
                 grid1.DataSource = dt;
                 grid1.DataBind();
@@ -67,8 +68,32 @@ public partial class StudentMaster : System.Web.UI.Page
 
     protected void btnExport_Click(object sender, EventArgs e)
     {
-        
+        Admin objAdmin = new Admin();
+        DataTable dt = objAdmin.ExportToExcel();
 
-                 
+        string path = Server.MapPath("PDF-Files") + "/ExportData.csv";
+        File.WriteAllText(path, table_to_csv(dt));
+    }
+
+    public static string table_to_csv(DataTable table)
+    {
+        string file = "";
+
+        foreach (DataColumn col in table.Columns)
+            file = string.Concat(file, col.ColumnName, ",");
+
+        file = file.Remove(file.LastIndexOf(','), 1);
+        file = string.Concat(file, "\r\n");
+
+        foreach (DataRow row in table.Rows)
+        {
+            foreach (object item in row.ItemArray)
+                file = string.Concat(file, item.ToString(), ",");
+
+            file = file.Remove(file.LastIndexOf(','), 1);
+            file = string.Concat(file, "\r\n");
+        }
+
+        return file;
     }
 }

@@ -16,9 +16,8 @@ public partial class StudentMasterEntry : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            //Int32 ID = Convert.ToInt32(Request.QueryString["RegID"]);
             String ID = Convert.ToString(Request.QueryString["RegID"]);
-            //if (ID.Length > 0)
+            
             if(!String.IsNullOrEmpty(ID))
             {
                 Admin objAdmin = new Admin();
