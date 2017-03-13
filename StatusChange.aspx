@@ -5,6 +5,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>User Registration</title>
+    <script type="text/javascript">
+        function validate() {
+            var inVal = $("#txtRegNo").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Reg No");
+                $("#txtRegNo").focus();
+                return false;
+            }
+        }
+
+        function validate1() {
+            var inVal = $("#txtRegNo").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Reg No to get Current Status");
+                $("#txtRegNo").focus();
+                return false;
+            }
+
+            var inVal1 = $("#txtcstatus").val();
+            var inVal2 = $("#txtnstatus").val();
+
+            if (inVal1.length == 0) {
+                alert("Blank Current Status");
+                $("#txtcstatus").focus();
+                return false;
+            }
+
+            if (inVal2.length == 0) {
+                alert("New Status Cannot be Blank");
+                $("#txtcstatus").focus();
+                return false;
+            }
+
+            if ($("#txtcstatus").val() = $("#txtnstatus").val()) {
+                alert("New Status Should not be Same as Current Status");
+                $("#txtnstatus").focus();
+                return false;
+            }
+        }
+    </script>
 </head>
 <link href="Assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="Assets/js/bootstrap.js" type="text/javascript"></script>
@@ -46,8 +86,8 @@
       
         <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
-                <asp:Button ID="btnSearch" class="btn btn-primary" Text="Search" runat="server" OnClick="btnSearch_Click" />
-                <asp:Button ID="btnSubmit" class="btn btn-primary" Text="Submit" runat="server" OnClick="btnSubmit_Click" />
+                <asp:Button ID="btnSearch" class="btn btn-primary" Text="Search" runat="server" OnClick="btnSearch_Click" OnClientClick ="return validate();" />
+                <asp:Button ID="btnSubmit" class="btn btn-primary" Text="Submit" runat="server" OnClick="btnSubmit_Click" OnClientClick ="return validate1();"  />
             </div>
         </div>
         </form>

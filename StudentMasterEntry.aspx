@@ -4,42 +4,182 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Student Master Entry</title>
-    <%--<script type="text/javascript">
-        jQuery(document).ready(function () {
-            $("#btnSubmit").click(function (e) {
-                debugger;
-                var a = $("#txtRegNo").val()
-                alert(a);
-            });
-        });
-
-    </script>--%>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#btnSubmit').click(function () {
-
-                var inVal = $("#txtRegNo").val();
-
-                if (inVal.length == 0) {
-                    alert("textbox value can't be empty");
-                    $("#txtRegNo").focus();
-                }
-            });
-        });
-     </script>
-
-</head>
+<title>Student Master Entry</title>
+<script type="text/javascript" src="Assets/js/jquery-1.11.3.min.js"></script>
 <link href="Assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="Assets/js/bootstrap.js" type="text/javascript"></script>
 <script src="Assets/js/bootstrap.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="Assets/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="Assets/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link href="Assets/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="Assets/js/bootstrap-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function validate() {
+            var inVal = $("#txtRegNo").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Reg No");
+                $("#txtRegNo").focus();
+                return false;
+            }
+            inVal = $("#txtIDNo").val();
+            if (inVal.length == 0) {
+                alert("Please Enter ID No");
+                $("#txtIDNo").focus();
+                return false; 
+            }
+            inVal = $("#txtUID").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Aadhaar");
+                $("#txtUID").focus();
+                return false;
+            }
+            if (inVal.length > 12 || inVal.length < 12) {
+                alert("Invalid Aadhaar Length");
+                $("#txtUID").focus();
+                return false;
+            }
+            inVal = $("#txtFName").val();
+            if (inVal.length == 0) {
+                alert("Please Enter First Name");
+                $("#txtFName").focus();
+                return false;
+            }
+            inVal = $("#txtMName").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Middle Name");
+                $("#txtMName").focus();
+                return false;
+            }
+            inVal = $("#txtSName").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Last Name");
+                $("#txtSName").focus();
+                return false;
+            }
+            inVal = $("#txtMotherName").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Mother's Name");
+                $("#txtMotherName").focus();
+                return false;
+            }
+            inVal = $("#txtReligion").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Religion");
+                $("#txtReligion").focus();
+                return false;
+            }
+            inVal = $("#txtCaste").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Caste");
+                $("#txtCaste").focus();
+                return false;
+            }
+            inVal = $("#txtSubcast").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Sub Caste");
+                $("#txtSubcast").focus();
+                return false;
+            }
+            inVal = $("#txtMothertongue").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Mothertongue");
+                $("#txtMothertongue").focus();
+                return false;
+            }
+            inVal = $("#txtVillage").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Village");
+                $("#txtVillage").focus();
+                return false;
+            }
+            inVal = $("#txtTaluka").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Taluka");
+                $("#txtTaluka").focus();
+                return false;
+            }
+            inVal = $("#txtDist").val();
+            if (inVal.length == 0) {
+                alert("Please Enter District");
+                $("#txtDist").focus();
+                return false;
+            }
+            inVal = $("#txtState").val();
+            if (inVal.length == 0) {
+                alert("Please Enter State");
+                $("#txtState").focus();
+                return false;
+            }
+            inVal = $("#txtCountry").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Country");
+                $("#txtCountry").focus();
+                return false;
+            }
+            inVal = $("#txtPrevSchoolName").val();
+            if (inVal.length == 0) {
+                alert("Please Enter Prev School Name");
+                $("#txtPrevSchoolName").focus();
+                return false;
+            }
+        }
+     </script>
+     
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        $("#txtUID").on('change', function () {
+            var Param1 = $("#txtRegNo").val();
+            var Param2 = $("#txtUID").val();
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: "StudentMasterEntry.aspx/ValidateAadharNo",
+                data: "{ Param1: '" + Param1 + "',Param2: '" + Param2 + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (data) {
+                    $.each(jQuery.parseJSON(data), function () {
+                        if (this != '') {
+                            alert(this);
+                        }
+                    });
+                },
+                Error: function (x, e) {
+                    alert('error encountered');
+
+                }
+            });
+        });
+
+        $("#txtRegNo").on('change', function () {
+            debugger;
+            var Param1 = $("#txtRegNo").val();
+            var Param2 = $("#txtGroup").val();
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: "StudentMasterEntry.aspx/ValidateRegNo",
+                data: "{ Param1: '" + Param1 + "',Param2: '" + Param2 + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (data) {
+                    $.each(jQuery.parseJSON(data), function () {
+                        if (this != '') {
+                            alert(this);
+                        }
+                    });
+                },
+                Error: function (x, e) {
+                    alert('error encountered');
+
+                }
+            });
+        });
+    });
+</script>
+
+</head>
 <body>
     <script src="Assets/js/bootstrap.js" type="text/javascript"></script>
     <div class="container">
@@ -89,7 +229,7 @@
         <div class="form-group row">
             <asp:Label Text="UID No" ID="lblUID" class="col-sm-2 col-form-label" runat="server"></asp:Label>
             <div class="col-sm-10">
-                <asp:TextBox ID="txtUID" class="form-control" placeholder="Enter UID No" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtUID" class="form-control" placeholder="Enter UID No" runat="server" ClientIDMode="Static"></asp:TextBox>
             </div>
         </div>
 
@@ -305,7 +445,7 @@
         <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
                 <asp:Button ID="btnEdit" class="btn btn-primary" Text="Edit" runat="server" OnClick="btnEdit_Click" />
-                <asp:Button ID="btnSubmit" class="btn btn-primary" Text="Submit" runat="server" OnClick="btnSubmit_Click" />
+                <asp:Button ID="btnSubmit" class="btn btn-primary" Text="Submit" runat="server" OnClick="btnSubmit_Click" OnClientClick ="return validate();"/>
                 <asp:Button ID="btnGenerateLC" class="btn btn-primary" Text="Generate LC" runat="server"
                     OnClick="btnGenerateLC_Click" />
             </div>
@@ -316,28 +456,28 @@
     <!-- Include jQuery -->
     <!-- Include Date Range Picker -->
     <script type="text/javascript">
-	$(document).ready(function(){
-        $('#calDOB').val("2000-01-01");
-		$('#calDOB').datepicker({
-			format: 'yyyy-mm-dd',
-			todayHighlight: true,
-			autoclose: true,
-		});
+        $(document).ready(function () {
+            $('#calDOB').val("2000-01-01");
+            $('#calDOB').datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true
+            });
 
-        $('#CalAdmissionDate').val("2000-01-01");
-        $('#CalAdmissionDate').datepicker({
-			format: 'yyyy-mm-dd',
-			todayHighlight: true,
-			autoclose: true,
-		}); 
+            $('#CalAdmissionDate').val("2000-01-01");
+            $('#CalAdmissionDate').datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true
+            });
 
-        $('#txtDOL').val("2000-01-01");
-        $('#txtDOL').datepicker({
-			format: 'yyyy-mm-dd',
-			todayHighlight: true,
-			autoclose: true,
-		});
-	});
+            $('#txtDOL').val("2000-01-01");
+            $('#txtDOL').datepicker({
+                format: 'yyyy-mm-dd',
+                todayHighlight: true,
+                autoclose: true
+            });
+        });
     </script>
 </body>
 </html>

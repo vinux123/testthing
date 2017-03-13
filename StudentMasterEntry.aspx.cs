@@ -9,6 +9,7 @@ using iTextSharp;
 using iTextSharp.text.pdf;
 using System.IO;
 using iTextSharp.text;
+using System.Web.Services;
 
 public partial class StudentMasterEntry : System.Web.UI.Page
 {
@@ -139,7 +140,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
     
     protected void btnGenerateLC_Click(object sender, EventArgs e)
     {
-        String ID = Convert.ToString(txtGroup.SelectedValue) + Convert.ToString(txtRegNo.Text);
+        string ID = Convert.ToString(txtGroup.SelectedValue) + Convert.ToString(txtRegNo.Text);
         string pdfregno;
         string pdfsid;
         string pdfsuid;
@@ -171,8 +172,17 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         //string pdfstdstudyingw;
         string pdfadmstandard;
 
+        string pdforgname;
+        string pdfschoolname;
+        string pdfline1;
+        string pdfline2;
+        string pdfline3;
+        string pdfline4;
+
         Admin objAdmin = new Admin();
         DataTable dt = objAdmin.GetStudentsList(Convert.ToString(ID));
+        // alpha version - load school setup in datatable.  
+        DataTable dt1 = objAdmin.GetSchoolSetup(1);
 
         pdfregno = dt.Rows[0]["stud_regno"].ToString();
         pdfsid = dt.Rows[0]["stud_idno"].ToString();
@@ -203,10 +213,18 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         pdfreason = dt.Rows[0]["stud_reasonofleaving"].ToString();
         pdfremarks = dt.Rows[0]["stud_remarks"].ToString();
 
-                   
+        // alpha version - save school setup in variables. 
+        pdforgname = dt1.Rows[0]["orgname"].ToString();
+        pdfschoolname = dt1.Rows[0]["schoolname"].ToString();
+        pdfline1 = dt1.Rows[0]["line1"].ToString();
+        pdfline2 = dt1.Rows[0]["line2"].ToString();
+        pdfline3 = dt1.Rows[0]["line3"].ToString();
+        pdfline4 = dt1.Rows[0]["line4"].ToString();
+
+
         //server folder path which is stored your PDF documents
         string path = Server.MapPath("PDF-Files");
-        string filename = path + "/LC_" + txtFName.Text + ".pdf";
+        string filename = path + "/LC_" + txtFName.Text + "_" + txtMName.Text + "_" + txtSName.Text + ".pdf";
         string imageURL = Server.MapPath("Assets/Images") + "/vplogo.png";
         iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
         
@@ -244,10 +262,12 @@ public partial class StudentMasterEntry : System.Web.UI.Page
 
             Paragraph paragraph1 = new Paragraph();
             Chunk p1c1 = new Chunk(jpg, 0f, -65f);
-            Paragraph paragraph3 = new Paragraph("VIDYA PRATISHTHAN'S", fontHeader);
+            //Paragraph paragraph3 = new Paragraph("VIDYA PRATISHTHAN'S", fontHeader);
+            Paragraph paragraph3 = new Paragraph(pdforgname, fontHeader);
             paragraph3.Alignment = Element.ALIGN_CENTER;
 
-            Paragraph paragraph4 = new Paragraph(new Phrase("SOMESHWAR ENGLISH MEDIUM SCHOOL", fontHeader1));
+            //Paragraph paragraph4 = new Paragraph(new Phrase("SOMESHWAR ENGLISH MEDIUM SCHOOL", fontHeader1));
+            Paragraph paragraph4 = new Paragraph(new Phrase(pdfschoolname, fontHeader1));
             paragraph4.Alignment = Element.ALIGN_CENTER;
             paragraph4.SpacingBefore = -10f;
 
@@ -255,7 +275,8 @@ public partial class StudentMasterEntry : System.Web.UI.Page
             document.Add(paragraph3);
             document.Add(paragraph4);
 
-            Paragraph paragraph5 = new Paragraph("Waghalwadi - Someshwarnagar Tal - Baramati Dist - Pune - 412306", fontTimes);
+            //Paragraph paragraph5 = new Paragraph("Waghalwadi - Someshwarnagar Tal - Baramati Dist - Pune - 412306", fontTimes);
+            Paragraph paragraph5 = new Paragraph(pdfline1, fontTimes);
             paragraph5.Alignment = Element.ALIGN_CENTER;
             document.Add(paragraph5);
 
@@ -771,6 +792,52 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         btnSubmit.Visible = true;
         btnEdit.Visible = false;
      }
+
+    //ValidateAadharNo
+    [WebMethod]
+    public static String ValidateAadharNo(string Param1, string Param2)
+    {
+        try
+        {
+            Admin objAdmin = new Admin();
+            if (!String.IsNullOrEmpty(Convert.ToString(objAdmin.GetAadhaarNo(Param2))))
+            {
+                //return "error";
+                return "Duplicate Aadhaar";
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+  
+    //ValidateRegNo
+    [WebMethod]
+    public static String ValidateRegNo(string Param1, string Param2)
+    {
+        try
+        {
+            Admin objAdmin = new Admin();
+            if (!String.IsNullOrEmpty(Convert.ToString(objAdmin.GetStudStatus(Param2 + Param1))))
+            {
+                //return "error";
+                return "Duplicate RegNo";
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
 }
   
 

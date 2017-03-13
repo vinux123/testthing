@@ -56,6 +56,56 @@ public class Admin
         }
 
     }
+
+    public void SaveSchoolSetup(Int32 school_srno, String school_orgname, String school_schoolname, String school_line1, String school_line2, String school_line3, String school_line4)
+    {
+        MySqlConnection conn;
+        try
+        {
+            string connectionstring = objDBHelper.GetSQLConnectionString();
+            conn = new MySqlConnection(connectionstring);
+            conn.Open();
+            using (MySqlCommand cmd = new MySqlCommand("school_setup", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@school_srno", school_srno);
+                cmd.Parameters.AddWithValue("@school_orgname", school_orgname);
+                cmd.Parameters.AddWithValue("@school_schoolname", school_schoolname);
+                cmd.Parameters.AddWithValue("@school_line1", school_line1);
+                cmd.Parameters.AddWithValue("@school_line2", school_line2);
+                cmd.Parameters.AddWithValue("@school_line3", school_line3);
+                cmd.Parameters.AddWithValue("@school_line4", school_line4);
+                cmd.ExecuteNonQuery();
+                cmd.Dispose();
+            }
+        }
+        catch (MySqlException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+
+        }
+
+    }
+
+    public DataTable GetSchoolSetup(Int32 school_srno)
+    {
+        DataTable dt = new DataTable();
+        MySqlConnection Connection;
+        String UserName = string.Empty;
+        string connectionstring = objDBHelper.GetSQLConnectionString();
+        Connection = new MySqlConnection(connectionstring);
+        Connection.Open();
+
+        string query = "Select * from school_setup where srno = " + school_srno ;
+        MySqlCommand cmd = new MySqlCommand(query, Connection);
+        MySqlDataReader dr = cmd.ExecuteReader();
+        dt.Load(dr);
+        Connection.Close();
+        return dt;
+    }
     
     public void SaveStudentDetails(String Reg_No, String Student_ID, String Student_UID, String Student_Fname, String Student_Mname, String Student_lname, String Student_mothers_name, String student_Religion, String Student_Caste,
         String Student_Subcaste, String Student_Nationality, String Student_MotherTongue, String Student_POB_Village, String Student_POB_taluka, String Student_POB_dist, String Student_POB_state, String Student_POB_country, String Student_DOB,
@@ -211,6 +261,22 @@ public class Admin
         Connection.Close();
         return uid;
     }
+
+    public String GetAadhaarNo(String parm1)
+    {
+        MySqlConnection Connection;
+        String aadhaar = String.Empty;
+        string connectionstring = objDBHelper.GetSQLConnectionString();
+        Connection = new MySqlConnection(connectionstring);
+        Connection.Open();
+
+        string query = "select stud_uid FROM vpems_gen_reg WHERE stud_uid='" + parm1 + "'";
+        MySqlCommand cmd = new MySqlCommand(query, Connection);
+        aadhaar = Convert.ToString(cmd.ExecuteScalar());
+        Connection.Close();
+        return aadhaar;
+    }
+
 
     public String GetStudStatus(String Regno)
     {
