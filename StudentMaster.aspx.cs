@@ -57,10 +57,6 @@ public partial class StudentMaster : System.Web.UI.Page
     {
         if (e.CommandName == "Show")
         {
-            // Retrieve the row index stored in the 
-            // CommandArgument property.
-            //int index = Convert.ToInt32(e.CommandArgument);
-
             Response.Redirect("StudentMasterEntry.aspx?RegID=" + e.CommandArgument);
         }
 
@@ -71,8 +67,20 @@ public partial class StudentMaster : System.Web.UI.Page
         Admin objAdmin = new Admin();
         DataTable dt = objAdmin.ExportToExcel();
 
-        string path = Server.MapPath("PDF-Files") + "/ExportData.csv";
+        string path = Server.MapPath("ExportedData") + "/ExportedStudentData_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") +".csv";
         File.WriteAllText(path, table_to_csv(dt));
+
+        if (File.Exists(path))
+        {
+            string message = string.Empty;
+            message = "File Generated Successfully";
+
+            string alert_redirect_Script = string.Format(@"<script type=""text/javascript"">
+                                       alert('{0}');
+                                        window.location = 'StudentMaster.aspx';
+                                       </script>", message);
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "alertredirectscript", alert_redirect_Script, false);
+        }
     }
 
     public static string table_to_csv(DataTable table)
@@ -93,7 +101,6 @@ public partial class StudentMaster : System.Web.UI.Page
             file = file.Remove(file.LastIndexOf(','), 1);
             file = string.Concat(file, "\r\n");
         }
-
         return file;
     }
 }

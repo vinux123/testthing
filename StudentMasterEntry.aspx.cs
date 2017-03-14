@@ -622,98 +622,10 @@ public partial class StudentMasterEntry : System.Web.UI.Page
             paragraph30.SpacingBefore = 50f;
             document.Add(paragraph30);
 
-            ////table item. 
-            //PdfPTable table = new PdfPTable(2);
-            //table.SpacingBefore = 10f;
-            //table.DefaultCell.FixedHeight = 25f;
-            //table.HorizontalAlignment = Element.ALIGN_CENTER;
-
-            //table.AddCell(new Paragraph("1] Name of Pupil in full",fontTimes));
-            //table.AddCell(new Paragraph(pdfstudname,fontTimes));
-            //table.AddCell(new Paragraph("2] Caste and Sub Caste",fontTimes));
-            //table.AddCell(new Paragraph(pdfcaste,fontTimes));
-            //table.AddCell(new Paragraph("3] Mother's Name",fontTimes));
-            //table.AddCell(new Paragraph(pdfmothernm,fontTimes));
-            //table.AddCell(new Paragraph("4] Nationality",fontTimes));
-            //table.AddCell("");
-            //table.AddCell(new Paragraph("5] Place of Birth",fontTimes));
-            //table.AddCell(new Paragraph(pdfpob,fontTimes));
-
-            //PdfPTable innertable = new PdfPTable(1);
-            //innertable.DefaultCell.PaddingTop = 0;
-            //innertable.DefaultCell.Border = Rectangle.NO_BORDER;
-            //innertable.AddCell(new Paragraph("6] Date of Birth",fontTimes));
-            //innertable.AddCell(new Paragraph("a) In Figure",fontTimes));
-            //innertable.AddCell(new Paragraph("b) In Words",fontTimes));
-            //innertable.AddCell(new Paragraph("(According to Christian era)",fontTimes));
-            //PdfPCell pdfpcell1 = new PdfPCell(innertable);
-            //table.AddCell(pdfpcell1);
-
-            //// innertable created for rowspan. 
-            //PdfPTable innertable1 = new PdfPTable(1);
-            //innertable1.DefaultCell.PaddingTop = 0;
-            //innertable1.DefaultCell.Border = Rectangle.NO_BORDER;
-            //innertable1.AddCell("");
-
-            //string dob = pdfdob.Substring(0, 10);
-            //innertable1.AddCell(new Paragraph(dob,fontTimes));
-
-            //DateTime dob1 = DateTime.Parse(dob);
-            //var doboutput = WrittenNumerics.DateToWritten(dob1);
-            //innertable1.AddCell("");
-            //innertable1.AddCell(new Paragraph(doboutput,fontTimes));
-
-            //PdfPCell pdfpcell2 = new PdfPCell(innertable1);
-            //table.AddCell(pdfpcell2);
-
-            //table.AddCell(new Paragraph("7] Last School attended and Standard",fontTimes));
-            //table.AddCell(new Paragraph(pdflastschool,fontTimes));
-            //table.AddCell(new Paragraph("8] Date of Admission",fontTimes));
-            //string pdfadmissiondate1 = pdfadmissiondate.Substring(0, 10);
-            //table.AddCell(new Paragraph(pdfadmissiondate1,fontTimes));
-            //table.AddCell(new Paragraph("9] Progress",fontTimes));
-            //table.AddCell(new Paragraph(pdfprogress,fontTimes));
-            //table.AddCell(new Paragraph("10] Conduct",fontTimes));
-            //table.AddCell(new Paragraph(pdfconduct,fontTimes));
-            //table.AddCell(new Paragraph("11] Date of Leaving the School",fontTimes));
-            //string pdfdol1 = pdfdol.Substring(0, 10);
-            //table.AddCell(new Paragraph(pdfdol1,fontTimes));
-            //table.AddCell(new Paragraph("12] Standard in which studying and since when",fontTimes));
-            //table.AddCell(new Paragraph(pdfstandard, fontTimes));
-            //table.AddCell(new Paragraph("13] Reason of Leaving the School",fontTimes));
-            //table.AddCell(new Paragraph(pdfreason,fontTimes));
-            //table.AddCell(new Paragraph("14] Remarks",fontTimes));
-            //table.AddCell(new Paragraph(pdfremarks,fontTimes));
-            //Paragraph paragraph11 = new Paragraph();
-            //paragraph11.Add(table);
-            //paragraph11.Alignment = Element.ALIGN_CENTER;
-
-            //document.Add(table);
-
-            //Paragraph paragraph12 = new Paragraph("Certified that above information is in accordance with the School Register.", fontTimes);
-            //paragraph12.Alignment = Element.ALIGN_CENTER;
-            //document.Add(paragraph12);
-
-            //Paragraph paragraph13 = new Paragraph("Date:     /     / 2017", fontTimes);
-            //paragraph13.Alignment = Element.ALIGN_LEFT;
-            //document.Add(paragraph13);
-
-            //Paragraph paragraph14 = new Paragraph("Clerk                                   Class Teacher                                    Principal", fontTimes);
-            //paragraph14.Alignment = Element.ALIGN_CENTER;
-            //paragraph14.SpacingBefore = 50f;
-            //document.Add(paragraph14);
-
+            // Update Student Status as Alumni. 
             Admin objAdmin1 = new Admin();
             objAdmin1.UpdateStudentStatus(Convert.ToString(txtGroup.SelectedValue) + Convert.ToString(txtRegNo.Text));
             
-            string message = string.Empty;
-            message = "LC Generated Successfully";
-            string alert_redirect_Script = string.Format(@"<script type=""text/javascript"">
-                                       alert('{0}');
-                                        window.location = 'StudentMaster.aspx';
-                                       </script>", message);
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "alertredirectscript", alert_redirect_Script, false);
-            //ShowPdf(filename);
         }
         catch (Exception ex)
         {
@@ -723,6 +635,16 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         finally
         {
             document.Close();
+            if (File.Exists(filename))
+            {
+                string message = string.Empty;
+                message = "LC Generated Successfully";
+                string alert_redirect_Script = string.Format(@"<script type=""text/javascript"">
+                                       alert('{0}');
+                                        window.location = 'StudentMaster.aspx';
+                                       </script>", message);
+                 ClientScript.RegisterClientScriptBlock(this.GetType(), "alertredirectscript", alert_redirect_Script, false);
+            }
         }      
     }
 
