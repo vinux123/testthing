@@ -231,7 +231,7 @@ public partial class StudentMasterEntry : System.Web.UI.Page
         //Create new PDF document
         Document document = new Document(PageSize.A4, 50f, 7.5f, 12.7f, 12.7f); 
         //Declare Fonts. 
-        BaseFont marathi = iTextSharp.text.pdf.BaseFont.CreateFont("C:\\WINDOWS\\Fonts\\SHIV01.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED); // --> CHANGED
+        BaseFont marathi = iTextSharp.text.pdf.BaseFont.CreateFont("C:\\WINDOWS\\Fonts\\SHIV01.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED); 
         BaseFont timesnew = iTextSharp.text.pdf.BaseFont.CreateFont("C:\\windows\\fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         BaseFont timesnewbd = iTextSharp.text.pdf.BaseFont.CreateFont("C:\\windows\\fonts\\timesbd.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         BaseFont header = iTextSharp.text.pdf.BaseFont.CreateFont("C:\\windows\\fonts\\timesbd.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
